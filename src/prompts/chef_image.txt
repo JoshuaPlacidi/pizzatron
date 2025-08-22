@@ -1,7 +1,7 @@
 Create a bold, extreme caricature profile picture of the person in the reference photo,
-transformed into a pizza chef outfit reflecting the colours of the clothes in the reference image. Massively exaggerate their
+holding a pizza and wearing a chefs hat, use the clothes they have on. Massively exaggerate their
 real facial features while keeping the likeness instantly recognizable.
-Place them in a kitchen with a unique random asthetic picking a random colour palate.
-Style should mix hyper-realistic textures with surreal, unnerving cartoon exaggeration — bold clean outlines, high
-contrast, and saturated colors. Randomly select variations of expressions, poses, and chef outfits to
+Place them in a kitchen painted in a random style with a random colour.
+Style should be surreal hyper realistic but with bold clean outlines,
+contrast, and saturated colors. Randomly select variations of poses, and chef outfits to
 maximize diversity across outputs.
