@@ -130,12 +130,12 @@ class DatabaseManager:
                 
             # Create review categories (only essential data)
             categories = [
-                ReviewCategory(name="Roundness"),
+                ReviewCategory(name="Shape"),
                 ReviewCategory(name="Crust Quality"),
-                ReviewCategory(name="Topping Distribution"),
-                ReviewCategory(name="Color Appeal"),
-                ReviewCategory(name="Estimated Taste"),
-                ReviewCategory(name="Overall Presentation")
+                ReviewCategory(name="Presentation"),
+                ReviewCategory(name="Bake Quality"),
+                ReviewCategory(name="Flavor (estimated)"),
+                ReviewCategory(name="Overall")
             ]
             
             session.add_all(categories)
