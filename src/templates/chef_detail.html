@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="terminal-panel">
+    <p style="margin-bottom: 20px; opacity: 0.6;">
+        <a href="/" style="color: var(--robot-green); text-decoration: none;">← BACK TO SYSTEM</a>
+    </p>
+    
+    <div class="chef-analysis-header" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
+        <img src="/static/images/pizzatron/pizzatron.png" alt="Pizzatron" class="pizzatron-small-logo">
+        <h1 class="robot-title" style="font-size: 2rem; margin: 0;">CHEF ANALYSIS</h1>
+    </div>
+</div>
+
+<div class="terminal-panel">
+    <div class="chef-card" style="margin-bottom: 0;">
+        <div class="card-body">
+            <div class="chef-avatar" style="margin-bottom: 20px;">
+                {% if chef.image_path %}
+                    <img src="{{ chef.image_path }}" alt="{{ chef.name }}" class="chef-image-large">
+                {% else %}
+                    <div class="chef-placeholder-large">
+                        <i class="robot-icon-large">🤖</i>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="chef-id">CHEF-{{ '%03d'|format(chef.id) }}</div>
+            <div class="chef-name" style="font-size: 2rem;">{{ chef.name }}</div>
+            <div class="chef-status status-online">● ACTIVE</div>
+            
+            <div class="chef-stats">
+                <div class="stat-item">
+                    <span class="stat-value">{{ chef.pizzas|length }}</span>
+                    <span class="stat-label">PIZZAS</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">
+                        {% set image_count = 0 %}
+                        {% for pizza in chef.pizzas %}
+                            {% set image_count = image_count + pizza.images|length %}
+                        {% endfor %}
+                        {{ image_count }}
+                    </span>
+                    <span class="stat-label">IMAGES</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">{{ chef.created_at.strftime('%m/%d/%y') }}</span>
+                    <span class="stat-label">REGISTERED</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="terminal-panel">
+    <h2>PIZZA SUBMISSIONS</h2>
+    
+    {% if chef.pizzas %}
+        {% for pizza in chef.pizzas %}
+        <div class="chef-card">
+            <div class="card-body">
+                <div class="chef-id">PIZZA-{{ '%03d'|format(pizza.id) }}</div>
+                <div class="chef-name" style="font-size: 1.2rem; color: var(--robot-blue);">
+                    SUBMISSION {{ loop.index }}
+                </div>
+                
+                {% if pizza.images %}
+                <div style="margin: 15px 0;">
+                    <strong style="color: var(--robot-amber);">IMAGES DETECTED:</strong>
+                    <div style="margin-top: 10px;">
+                        {% for image in pizza.images %}
+                        <span style="display: inline-block; background: var(--border-color); padding: 4px 8px; margin: 2px; border-radius: 4px; font-size: 0.8rem;">
+                            IMG-{{ '%03d'|format(image.id) }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% else %}
+                <div style="margin: 15px 0; opacity: 0.6;">
+                    NO IMAGES UPLOADED
+                </div>
+                {% endif %}
+                
+                <div style="font-size: 0.9rem; opacity: 0.8;">
+                    TIMESTAMP: {{ pizza.created_at.strftime('%m/%d/%y %H:%M:%S') }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div style="text-align: center; padding: 40px 0; opacity: 0.6;">
+            <p>NO PIZZA SUBMISSIONS DETECTED</p>
+            <p style="font-size: 0.9rem;">CHEF {{ chef.name }} HAS NOT SUBMITTED ANY PIZZAS</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

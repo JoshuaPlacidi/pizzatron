@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="terminal-panel main-header">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <img src="/static/images/pizzatron/pizzatron.png" alt="Pizzatron AI Judge" class="pizzatron-main-logo">
+        <h1 class="robot-title">PIZZATRON</h1>
+    </div>
+    <p style="text-align: center; margin-bottom: 20px; font-size: 1rem; opacity: 0.9;">
+        INITIALIZING PIZZA ANALYSIS PROTOCOLS<span class="loading-dots"></span>
+    </p>
+</div>
+
+<div class="terminal-panel">
+    <div class="chef-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div>
+            <h2 style="margin-bottom: 10px;">REGISTERED CHEFS</h2>
+            <p style="opacity: 0.8; margin: 0;">
+                {{ chefs|length }} CHEF{{ 'S' if chefs|length != 1 else '' }} DETECTED // AWAITING PIZZA SUBMISSIONS
+            </p>
+        </div>
+        <a href="/create-chef" class="btn-robot btn-primary">
+            + REGISTER NEW CHEF
+        </a>
+    </div>
+    
+    {% if chefs %}
+        <div class="chefs-grid">
+            {% for chef in chefs %}
+            <div class="chef-card-improved">
+                <a href="/chef/{{ chef.id }}" class="chef-link">
+                    <div class="chef-image-container">
+                        {% if chef.image_path %}
+                            <img src="{{ chef.image_path }}" alt="{{ chef.name }}" class="chef-image-square">
+                        {% else %}
+                            <div class="chef-placeholder-square">
+                                <span class="robot-icon-square">🤖</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="chef-info">
+                        <h3 class="chef-name-card">{{ chef.name }}</h3>
+                        <div class="chef-pizza-count">
+                            <span class="pizza-count-number">{{ chef.pizzas|length }}</span>
+                            <span class="pizza-count-label">PIZZA{{ 'S' if chef.pizzas|length != 1 else '' }}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 40px 0; opacity: 0.6;">
+            <p>NO CHEFS DETECTED</p>
+            <p style="font-size: 0.9rem;">SYSTEM AWAITING REGISTRATION...</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

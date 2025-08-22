@@ -1,0 +1,8 @@
+click==8.2.1
+h11==0.16.0
+-e git+https://github.com/JoshuaPlacidi/pizzatron.git@ad5d235bdba7dc377a57f69f90ede5301d0dc519#egg=pizzatron
+python-dotenv==1.1.1
+SQLAlchemy==1.4.54
+uvicorn==0.35.0
+matplotlib>=3.5.0
+Pillow>=9.0.0

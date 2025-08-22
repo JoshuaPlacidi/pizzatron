@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <link href="/static/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/static/images/pizzatron/pizzatron.png" alt="Pizzatron" class="pizzatron-logo">
+                PIZZATRON
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">SYSTEM</a>
+                <a class="nav-link" href="/submit-pizza">SUBMIT</a>
+                <a class="nav-link" href="/leaderboard">SCORES</a>
+                <a class="nav-link" href="/create-chef">NEW CHEF</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="footer-text">
+                PIZZATRON AI JUDGE v1.0 // ANALYZING PIZZA EXCELLENCE...
+            </p>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

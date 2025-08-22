@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="terminal-panel">
+    <p style="margin-bottom: 20px; opacity: 0.6;">
+        <a href="/" style="color: var(--robot-green); text-decoration: none;">← BACK TO SYSTEM</a>
+    </p>
+    
+    <div class="chef-analysis-header" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
+        <img src="/static/images/pizzatron/pizzatron.png" alt="Pizzatron" class="pizzatron-small-logo">
+        <h1 class="robot-title" style="font-size: 2rem; margin: 0;">PIZZA SUBMISSION</h1>
+    </div>
+</div>
+
+<div class="terminal-panel">
+    <h2>SUBMIT FOR JUDGMENT</h2>
+    <p style="margin-bottom: 30px; opacity: 0.8;">
+        UPLOAD YOUR PIZZA FOR PIZZATRON'S BRUTAL ANALYSIS
+    </p>
+    
+    {% if error %}
+    <div class="error-message">
+        <strong style="color: var(--robot-red);">SUBMISSION ERROR:</strong> {{ error }}
+    </div>
+    {% endif %}
+    
+    <form method="post" action="/submit-pizza" enctype="multipart/form-data" class="chef-form">
+        <div class="form-group">
+            <label for="chef_id" class="form-label">SELECT YOUR CHEF ID:</label>
+            <select id="chef_id" name="chef_id" class="form-input" required>
+                <option value="">-- SELECT CHEF --</option>
+                {% for chef in chefs %}
+                <option value="{{ chef.id }}" {% if selected_chef_id == chef.id %}selected{% endif %}>
+                    CHEF-{{ '%03d'|format(chef.id) }}: {{ chef.name }}
+                </option>
+                {% endfor %}
+            </select>
+            <div class="input-help">IDENTIFY YOURSELF TO PIZZATRON</div>
+        </div>
+        
+        <div class="form-group">
+            <label for="images" class="form-label">PIZZA IMAGES (1-3 REQUIRED):</label>
+            <input 
+                type="file" 
+                id="images" 
+                name="images" 
+                class="form-input file-input" 
+                accept="image/*"
+                multiple
+                required
+            >
+            <div class="input-help">UPLOAD 1-3 IMAGES OF YOUR PIZZA FOR ANALYSIS</div>
+            <div class="input-help">SUPPORTED FORMATS: JPG, PNG, GIF, WEBP</div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn-robot btn-primary">
+                SUBMIT FOR JUDGMENT
+            </button>
+            <a href="/" class="btn-robot btn-secondary">
+                ABORT MISSION
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

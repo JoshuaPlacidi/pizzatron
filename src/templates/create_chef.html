@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="terminal-panel">
+    <p style="margin-bottom: 20px; opacity: 0.6;">
+        <a href="/" style="color: var(--robot-green); text-decoration: none;">← BACK TO SYSTEM</a>
+    </p>
+    
+    <div style="text-align: center; margin-bottom: 30px;">
+        <img src="/static/images/pizzatron/pizzatron.png" alt="Pizzatron" class="pizzatron-small-logo">
+        <h1 class="robot-title" style="font-size: 2rem;">NEW CHEF REGISTRATION</h1>
+    </div>
+</div>
+
+<div class="terminal-panel">
+    <h2>CHEF DATA INPUT</h2>
+    <p style="margin-bottom: 30px; opacity: 0.8;">
+        ENTER CHEF CREDENTIALS FOR SYSTEM REGISTRATION
+    </p>
+    
+    {% if error %}
+    <div class="error-message">
+        <strong style="color: var(--robot-red);">REGISTRATION ERROR:</strong> {{ error }}
+    </div>
+    {% endif %}
+    
+    <form method="post" action="/create-chef" enctype="multipart/form-data" class="chef-form">
+        <div class="form-group">
+            <label for="name" class="form-label">CHEF DESIGNATION:</label>
+            <input 
+                type="text" 
+                id="name" 
+                name="name" 
+                class="form-input" 
+                value="{{ name or '' }}"
+                placeholder="Enter chef name..."
+                required
+                maxlength="100"
+            >
+            <div class="input-help">ALPHANUMERIC DESIGNATION REQUIRED</div>
+        </div>
+        
+        <div class="form-group">
+            <label for="image" class="form-label">CHEF IMAGE (OPTIONAL):</label>
+            <input 
+                type="file" 
+                id="image" 
+                name="image" 
+                class="form-input file-input" 
+                accept="image/*"
+            >
+            <div class="input-help">SUPPORTED FORMATS: JPG, PNG, GIF, WEBP (MAX 10MB)</div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn-robot btn-primary">
+                REGISTER CHEF
+            </button>
+            <a href="/" class="btn-robot btn-secondary">
+                CANCEL OPERATION
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

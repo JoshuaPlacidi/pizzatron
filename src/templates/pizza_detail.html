@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="terminal-panel">
+    <p style="margin-bottom: 20px; opacity: 0.6;">
+        <a href="/" style="color: var(--robot-green); text-decoration: none;">← BACK TO SYSTEM</a>
+    </p>
+    
+    <div class="chef-analysis-header" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
+        <img src="/static/images/pizzatron/pizzatron.png" alt="Pizzatron" class="pizzatron-small-logo">
+        <h1 class="robot-title" style="font-size: 2rem; margin: 0;">PIZZA ANALYSIS</h1>
+    </div>
+</div>
+
+<div class="terminal-panel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div>
+            <h2>PIZZA-{{ '%03d'|format(pizza.id) }}</h2>
+            <p style="opacity: 0.8; margin: 0;">
+                CHEF: <a href="/chef/{{ pizza.chef.id }}" style="color: var(--robot-green); text-decoration: none;">{{ pizza.chef.name }}</a>
+            </p>
+        </div>
+        <div style="text-align: right; opacity: 0.6;">
+            <small>SUBMITTED: {{ pizza.created_at.strftime('%m/%d/%y %H:%M') }}</small>
+        </div>
+    </div>
+    
+    <!-- Pizza Images -->
+    {% if pizza.images %}
+    <div class="pizza-images-grid">
+        {% for image in pizza.images %}
+        <div class="pizza-image-container">
+            <img src="{{ image.image_path }}" alt="Pizza Image {{ loop.index }}" class="pizza-image">
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Review Section -->
+{% if pizza.review %}
+<div class="terminal-panel">
+    <h2 style="color: var(--robot-red);">PIZZATRON'S JUDGMENT</h2>
+    
+    <div class="review-summary">
+        <p>"{{ pizza.review.review_summary }}"</p>
+        <small style="opacity: 0.6;">- PIZZATRON AI JUDGE</small>
+    </div>
+    
+    {% if pizza.review.scores %}
+    <div class="review-scores">
+        <h3>DETAILED ANALYSIS</h3>
+        <div class="scores-grid">
+            {% for score in pizza.review.scores %}
+            <div class="score-item">
+                <span class="score-category">{{ score.category.name }}:</span>
+                <span class="score-value">{{ score.score }}/5</span>
+                <div class="score-bar">
+                    <div class="score-fill" style="width: {{ (score.score / 5) * 100 }}%;"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        {% set total_score = pizza.review.scores | sum(attribute='score') %}
+        {% set avg_score = (total_score / pizza.review.scores|length) | round(1) %}
+        <div class="overall-score">
+            <strong>OVERALL SCORE: {{ avg_score }}/5</strong>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% else %}
+<div class="terminal-panel">
+    <h2 style="color: var(--robot-amber);">ANALYSIS IN PROGRESS</h2>
+    <p style="text-align: center; padding: 40px 0;">
+        PIZZATRON IS ANALYZING YOUR SUBMISSION<span class="loading-dots"></span>
+    </p>
+    <p style="text-align: center; opacity: 0.6;">
+        REFRESH PAGE TO CHECK RESULTS
+    </p>
+</div>
+{% endif %}
+{% endblock %}

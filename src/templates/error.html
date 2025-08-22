@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="terminal-panel">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <img src="/static/images/pizzatron.png" alt="Pizzatron" class="pizzatron-small-logo" style="filter: drop-shadow(0 0 15px var(--robot-red));">
+        <h1 class="robot-title" style="color: var(--robot-red);">SYSTEM ERROR</h1>
+    </div>
+    <div style="text-align: center; padding: 40px 0;">
+        <div style="font-size: 4rem; color: var(--robot-red); margin-bottom: 20px;">⚠</div>
+        <h2 style="color: var(--robot-red); margin-bottom: 20px;">CRITICAL FAILURE DETECTED</h2>
+        <div style="background: var(--border-color); padding: 20px; border-radius: 8px; margin: 20px 0; font-family: 'Share Tech Mono', monospace;">
+            <strong style="color: var(--robot-red);">ERROR:</strong> {{ error }}
+        </div>
+        <a href="/" class="btn-robot">RETURN TO SYSTEM</a>
+    </div>
+</div>
+{% endblock %}

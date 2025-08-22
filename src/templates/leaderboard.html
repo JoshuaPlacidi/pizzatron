@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="terminal-panel">
+    <div class="chef-analysis-header" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px;">
+        <img src="/static/images/pizzatron/pizzatron.png" alt="Pizzatron" class="pizzatron-small-logo">
+        <h1 class="robot-title" style="font-size: 2rem; margin: 0;">PIZZA LEADERBOARD</h1>
+    </div>
+    <p style="text-align: center; margin-bottom: 20px; opacity: 0.8;">
+        TOP RATED PIZZAS BY PIZZATRON AI JUDGE
+    </p>
+</div>
+
+<div class="terminal-panel">
+    {% if pizzas_with_scores %}
+        <div class="leaderboard-list">
+            {% for pizza, avg_score in pizzas_with_scores %}
+            <div class="leaderboard-item">
+                <div class="rank-number">
+                    #{{ loop.index }}
+                </div>
+                
+                <div class="pizza-preview">
+                    {% if pizza.images %}
+                        <img src="{{ pizza.images[0].image_path }}" alt="Pizza {{ pizza.id }}" class="leaderboard-pizza-image">
+                    {% else %}
+                        <div class="pizza-placeholder">🍕</div>
+                    {% endif %}
+                </div>
+                
+                <div class="pizza-info">
+                    <h3 class="pizza-title">
+                        <a href="/pizza/{{ pizza.id }}" style="color: var(--robot-green); text-decoration: none;">
+                            PIZZA-{{ '%03d'|format(pizza.id) }}
+                        </a>
+                    </h3>
+                    <p class="chef-credit">
+                        BY: <a href="/chef/{{ pizza.chef.id }}" style="color: var(--robot-blue); text-decoration: none;">{{ pizza.chef.name }}</a>
+                    </p>
+                    {% if pizza.review %}
+                    <p class="review-snippet">
+                        "{{ pizza.review.review_summary[:100] }}{% if pizza.review.review_summary|length > 100 %}...{% endif %}"
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <div class="score-display">
+                    <div class="avg-score">{{ '%.1f'|format(avg_score) }}</div>
+                    <div class="score-label">SCORE</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="text-align: center; padding: 40px 0; opacity: 0.6;">
+            <p>NO REVIEWED PIZZAS YET</p>
+            <p style="font-size: 0.9rem;">SUBMIT PIZZAS FOR PIZZATRON'S JUDGMENT</p>
+            <div style="margin-top: 20px;">
+                <a href="/submit-pizza" class="btn-robot btn-primary">SUBMIT PIZZA</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
